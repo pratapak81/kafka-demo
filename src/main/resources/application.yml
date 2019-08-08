@@ -14,10 +14,18 @@ spring:
           destination: ticktok
         eventIn:
           destination: event
+        pvin:
+          destination: pageviewevent
+        #pcin:
+        #  destination: pcs
         output:
           destination: ticktok
         eventOut:
           destination: event
+        pvout:
+          destination: pageviewevent
+        #pcout:
+        #  destination: pcs
 
 
 

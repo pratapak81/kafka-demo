@@ -14,6 +14,11 @@ public class MessageController {
     @Autowired
     private MessageSender messageSender;
 
+    @RequestMapping
+    public void sendMessage() {
+        messageSender.send();
+    }
+
     @RequestMapping("/{message}")
     public String sendMessage(@PathVariable("message") String message) {
         messageSender.send(message);
