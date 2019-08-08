@@ -1,1 +1,21 @@
+server:
+  port: 8082
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        input:
+          destination: ticktok
+        eventIn:
+          destination: event
+        output:
+          destination: ticktok
+        eventOut:
+          destination: event
+
+
 
