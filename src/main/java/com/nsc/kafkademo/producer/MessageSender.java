@@ -5,7 +5,15 @@ import com.nsc.kafkademo.source.EventSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @EnableBinding({Source.class, EventSource.class})
 public class MessageSender {
@@ -24,6 +32,16 @@ public class MessageSender {
     }
 
     public void send(Event event) {
-        eventSource.output().send(MessageBuilder.withPayload(event).build());
+        List<String> eventNames = Arrays.asList("Leave", "Holiday", "Meeting", "Travel", "Business");
+        Runnable runnable = () -> {
+            event.setName(eventNames.get(new Random().nextInt(eventNames.size())));
+            event.setId(new Random().nextInt(5));
+            Message<Event> message = MessageBuilder
+                    .withPayload(event)
+                    .setHeader(KafkaHeaders.MESSAGE_KEY, event.getName().getBytes())
+                    .build();
+            eventSource.output().send(message);
+        };
+        Executors.newScheduledThreadPool(1).scheduleAtFixedRate(runnable, 1, 1, TimeUnit.SECONDS);
     }
 }

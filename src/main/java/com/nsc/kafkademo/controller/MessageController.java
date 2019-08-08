@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/message")
-public class MessageContoller {
+public class MessageController {
 
     @Autowired
     private MessageSender messageSender;
