@@ -7,6 +7,14 @@ spring:
   cloud:
     stream:
       kafka:
+        streams:
+          binder:
+            configuration:
+              default:
+                key:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value:
+                  serde: org.apache.kafka.common.serialization.Serdes$StringSerde
         binder:
           brokers: localhost:9092
       bindings:
@@ -16,16 +24,12 @@ spring:
           destination: event
         pvin:
           destination: pageviewevent
-        #pcin:
-        #  destination: pcs
         output:
           destination: ticktok
         eventOut:
           destination: event
         pvout:
           destination: pageviewevent
-        #pcout:
-        #  destination: pcs
 
 
 

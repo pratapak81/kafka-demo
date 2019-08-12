@@ -30,4 +30,10 @@ public class MessageController {
         messageSender.send(event);
         return new ResponseEntity<>(event, HttpStatus.OK);
     }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<String> sendMessageKStream() {
+        messageSender.send();
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
 }
