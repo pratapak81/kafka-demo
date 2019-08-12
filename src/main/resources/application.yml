@@ -10,11 +10,27 @@ spring:
         streams:
           binder:
             configuration:
+              commit:
+                interval:
+                  mms: 1000
               default:
                 key:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+            application-id: spring-cloud-stream-kafka
+          bindings:
+            pcout:
+              producer:
+                application-id: page-count-stream
+                key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value-serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+            pcin:
+              consumer:
+                application-id: page-count-stream
+                key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                value-serde: org.apache.kafka.common.serialization.Serdes$LongSerde
+
         binder:
           brokers: localhost:9092
       bindings:
@@ -24,12 +40,22 @@ spring:
           destination: event
         pvin:
           destination: pageviewevent
+        pcin:
+          destination: pagecountevent
+          group: pagecountevent
+          consumer:
+            use-native-encoding: true
         output:
           destination: ticktok
         eventOut:
           destination: event
         pvout:
           destination: pageviewevent
+        pcout:
+          destination: pagecountevent
+          producer:
+            use-native-encoding: true
+
 
 
 
