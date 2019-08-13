@@ -35,6 +35,7 @@ public class MessageReceiver {
         return eventKStream.filter((key, value) -> value.getDuration() > 10)
                 .map((key, value) -> new KeyValue<>(value.getPage(), "0"))
                 .groupByKey()
+                //.groupBy((key, value) -> key)
                 .count(Materialized.as("PAGE_COUNT_MV"))
                 .toStream();
     }
